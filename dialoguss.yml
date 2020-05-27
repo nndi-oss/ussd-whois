@@ -1,0 +1,31 @@
+# Dialoguss script for ussd-whois
+# 
+# https://github.com/nndi-oss/dialoguss
+# 
+url: "http://localhost:8773"
+dial: "*1234*1234#"
+# 'global' phone number, overriden per session
+phoneNumber: 265888123456
+sessions:
+  - id: 12345678910
+    phoneNumber: 265888123456
+    description: "Should search for a domain"
+    steps:
+      # The first step is the response after dialing the ussd code
+      - expect: |-
+          Welcome to USSD WhoIs
+
+          1. Check for domain
+          2. About
+      - userInput: "1"
+        expect: |-
+          Check for domain
+
+          Enter the name of a domain. e.g. mywebsite.com
+      - userInput: "example.com" 
+        expect: |-
+          example.com is already registered.
+          
+          Owner: Owner
+          Updated: 2019-12-31 00:00:00
+          Name Servers: ns1.example.com, ns2.example.com
